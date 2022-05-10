@@ -1,8 +1,7 @@
-FROM ubuntu
+FROM nginx
 
-RUN apt-get update && apt-get install -y snapd
-RUN snap install certbot
+COPY /etc/letsencrypt/live/ /etc/letsencrypt/live/
 
-COPY renew.sh /scripts/renew.sh
+COPY proxy.conf /etc/nginx/nginx.conf
 
-CMD ["/scripts/renew.sh"]
+CMD ["nginx", "-g", "daemon off;"]
